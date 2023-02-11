@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CuttingCounter : BaseCounter
 {
-    [SerializeField] private KitchenObjectSO cutKitchenObjectSO;
+    [SerializeField] private CuttingRecipeSO[] cuttingRecipeSOs;
 
     public override void Interact(Player player)
     {
@@ -14,7 +14,11 @@ public class CuttingCounter : BaseCounter
             if (player.HasKitchenObject())
             {
                 // Player is carrying something
-                player.GetKitchenObject().KitchenObjectParent = this;
+                if (HasRecipeWithInput(player.GetKitchenObject().KitchenObjectSO))
+                {
+                    // Player carrying something that can be cut
+                    player.GetKitchenObject().KitchenObjectParent = this;
+                }
             }
             else
             {
@@ -38,12 +42,38 @@ public class CuttingCounter : BaseCounter
 
     public override void InteractAlternate(Player player)
     {
-        if (HasKitchenObject())
+        if (HasKitchenObject() && HasRecipeWithInput(GetKitchenObject().KitchenObjectSO))
         {
-            // There is a KitchenObject here
+            // There is a KitchenObject here AND it can be cut
+            KitchenObjectSO outputKitchenObjectSO = GetOutputForInput(GetKitchenObject().KitchenObjectSO);
+
             GetKitchenObject().DestroySelf();
 
-            KitchenObject.SpawnKitchenObject(cutKitchenObjectSO, this);
+            KitchenObject.SpawnKitchenObject(outputKitchenObjectSO, this);
         }
+    }
+
+    private bool HasRecipeWithInput(KitchenObjectSO inputKitchenObjectSO)
+    {
+        foreach (CuttingRecipeSO recipeSO in cuttingRecipeSOs)
+        {
+            if (recipeSO.Input == inputKitchenObjectSO)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private KitchenObjectSO GetOutputForInput(KitchenObjectSO inputKitchenObjectSO)
+    {
+        foreach (CuttingRecipeSO recipeSO in cuttingRecipeSOs)
+        {
+            if (recipeSO.Input == inputKitchenObjectSO)
+            {
+                return recipeSO.Output;
+            }
+        }
+        return null;
     }
 }
