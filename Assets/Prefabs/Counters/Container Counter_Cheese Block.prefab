@@ -8,10 +8,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2047318062207008891, guid: 59e9de468bc03e243a59ce9f15c01dbe,
+        type: 3}
+      propertyPath: _kitchenObjectSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 6e6a5f0c869d5104180ac4c01a3b84d7,
+        type: 2}
     - target: {fileID: 3166232239770632704, guid: 59e9de468bc03e243a59ce9f15c01dbe,
         type: 3}
       propertyPath: m_Name
-      value: Container Counter
+      value: Container Counter_Cheese Block
       objectReference: {fileID: 0}
     - target: {fileID: 3166232239770632706, guid: 59e9de468bc03e243a59ce9f15c01dbe,
         type: 3}
