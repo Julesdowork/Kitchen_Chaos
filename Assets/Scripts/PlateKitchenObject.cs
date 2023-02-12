@@ -15,6 +15,8 @@ public class PlateKitchenObject : KitchenObject
 
     private List<KitchenObjectSO> _kitchenObjectSOs;
 
+    public List<KitchenObjectSO> KitchenObjectSOs => _kitchenObjectSOs;
+
     void Awake()
     {
         _kitchenObjectSOs= new List<KitchenObjectSO>();
