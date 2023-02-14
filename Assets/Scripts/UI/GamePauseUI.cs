@@ -21,7 +21,8 @@ public class GamePauseUI : MonoBehaviour
         });
         _optionsButton.onClick.AddListener(() =>
         {
-            OptionsUI.Instance.Show();
+            Hide();
+            OptionsUI.Instance.Show(Show);
         });
     }
 
@@ -46,6 +47,8 @@ public class GamePauseUI : MonoBehaviour
     private void Show()
     {
         gameObject.SetActive(true);
+
+        _resumeButton.Select();
     }
 
     private void Hide()
