@@ -231,6 +231,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "UI",
+            "id": "d8e51b57-6027-431b-bc87-5072993a4fee",
+            "actions": [
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "948451a8-f284-451e-af35-52b40740299e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "83725fb5-b983-44be-979e-3d2b22cc11a8",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

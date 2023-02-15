@@ -36,6 +36,9 @@ public class StoveCounter : BaseCounter, IHasProgress
 
     void Update()
     {
+        if (GameManager.Instance.IsGameOver())
+            return;
+
         if (HasKitchenObject())
         {
             switch (_state)

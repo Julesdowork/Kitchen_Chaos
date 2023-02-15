@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     private State _state;
     private float _countdownToStartTimer = 3f;
     private float _gamePlayingTimer;
-    private float _gamePlayingTimerMax = 30f;
+    private float _gamePlayingTimerMax = 10f;
     private bool _isGamePaused = false;
 
     public float CountdownToStartTimer => _countdownToStartTimer;
