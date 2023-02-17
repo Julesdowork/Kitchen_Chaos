@@ -41,20 +41,6 @@ public class GameManager : MonoBehaviour
         GameInput.Instance.OnInteract += GameInput_OnInteract;
     }
 
-    private void GameInput_OnInteract(object sender, EventArgs e)
-    {
-        if (_state == State.WaitingToStart)
-        {
-            _state = State.CountdownToStart;
-            OnStateChanged?.Invoke(this, EventArgs.Empty);
-        }
-    }
-
-    private void GameInput_OnPause(object sender, EventArgs e)
-    {
-        TogglePauseGame();
-    }
-
     void Update()
     {
         switch (_state)
@@ -81,6 +67,20 @@ public class GameManager : MonoBehaviour
             case State.GameOver:
                 break;
         }
+    }
+
+    private void GameInput_OnInteract(object sender, EventArgs e)
+    {
+        if (_state == State.WaitingToStart)
+        {
+            _state = State.CountdownToStart;
+            OnStateChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    private void GameInput_OnPause(object sender, EventArgs e)
+    {
+        TogglePauseGame();
     }
 
     public bool IsGamePlaying()
