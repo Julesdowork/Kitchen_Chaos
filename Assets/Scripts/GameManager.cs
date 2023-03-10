@@ -20,9 +20,9 @@ public class GameManager : MonoBehaviour
     }
 
     private State _state;
-    private float _countdownToStartTimer = 3f;
+    private float _countdownToStartTimer = 1f;
     private float _gamePlayingTimer;
-    private float _gamePlayingTimerMax = 180f;
+    private float _gamePlayingTimerMax = 300f;
     private bool _isGamePaused = false;
 
     public float CountdownToStartTimer => _countdownToStartTimer;
@@ -39,10 +39,16 @@ public class GameManager : MonoBehaviour
     {
         GameInput.Instance.OnPause += GameInput_OnPause;
         GameInput.Instance.OnInteract += GameInput_OnInteract;
+
+        // DEBUG TRIGGER GAME TO START AUTOMATICALLY
+        _state = State.CountdownToStart;
+        OnStateChanged?.Invoke(this, EventArgs.Empty);
     }
 
     void Update()
     {
+        Debug.Log(_state);
+
         switch (_state)
         {
             case State.WaitingToStart:

@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class Player : MonoBehaviour, IKitchenObjectParent
+public class Player : NetworkBehaviour, IKitchenObjectParent
 {
-    public static Player Instance { get; private set; }
+    //public static Player Instance { get; private set; }
 
     public event EventHandler OnPickedSomething;
     public event EventHandler<OnSelectedCounterChangedEventArgs> OnSelectedCounterChanged;
@@ -15,7 +16,6 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     }
 
     [SerializeField] private float _moveSpeed = 7f;
-    [SerializeField] private GameInput _gameInput;
     [SerializeField] private LayerMask _countersLayer;
     [SerializeField] private Transform _kitchenObjectHoldPoint;
 
@@ -26,17 +26,13 @@ public class Player : MonoBehaviour, IKitchenObjectParent
 
     void Awake()
     {
-        if (Instance != null)
-        {
-            Debug.LogError("There is more than one Player instance.");
-        }
-        Instance = this;
+        //Instance = this;
     }
 
     void Start()
     {
-        _gameInput.OnInteract += GameInput_OnInteract;
-        _gameInput.OnInteractAlternate += GameInput_OnInteractAlternate;
+        GameInput.Instance.OnInteract += GameInput_OnInteract;
+        GameInput.Instance.OnInteractAlternate += GameInput_OnInteractAlternate;
     }
 
     void Update()
@@ -72,7 +68,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
 
     private void HandleInteractions()
     {
-        Vector2 inputVector = _gameInput.GetMovementVectorNormalized();
+        Vector2 inputVector = GameInput.Instance.GetMovementVectorNormalized();
 
         Vector3 moveDir = new Vector3(inputVector.x, 0, inputVector.y);
 
@@ -105,7 +101,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
 
     private void HandleMovement()
     {
-        Vector2 inputVector = _gameInput.GetMovementVectorNormalized();
+        Vector2 inputVector = GameInput.Instance.GetMovementVectorNormalized();
 
         Vector3 moveDir = new Vector3(inputVector.x, 0, inputVector.y);
 
