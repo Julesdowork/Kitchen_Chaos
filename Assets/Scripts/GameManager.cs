@@ -47,8 +47,6 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(_state);
-
         switch (_state)
         {
             case State.WaitingToStart:
