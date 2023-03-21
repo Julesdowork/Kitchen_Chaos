@@ -37,12 +37,12 @@ public class GameMultiplayer : NetworkBehaviour
         kitchenObject.KitchenObjectParent = kitchenObjectParent;
     }
 
-    private int GetKitchenObjectSOIndex(KitchenObjectSO kitchenObjectSO)
+    public int GetKitchenObjectSOIndex(KitchenObjectSO kitchenObjectSO)
     {
         return _kitchenObjectListSO.kitchenObjectSOs.IndexOf(kitchenObjectSO);
     }
 
-    private KitchenObjectSO GetKitchenObjectSOFromIndex(int kitchenObjectSOIndex)
+    public KitchenObjectSO GetKitchenObjectSOFromIndex(int kitchenObjectSOIndex)
     {
         return _kitchenObjectListSO.kitchenObjectSOs[kitchenObjectSOIndex];
     }
