@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Netcode;
 using UnityEngine;
 
 public class TrashCounter : BaseCounter
@@ -17,23 +16,9 @@ public class TrashCounter : BaseCounter
     {
         if (player.HasKitchenObject())
         {
-            KitchenObject.DestroyKitchenObject(player.GetKitchenObject());
+            player.GetKitchenObject().DestroySelf();
 
-            InteractLogicServerRpc();
+            OnAnyObjectTrashed?.Invoke(this, EventArgs.Empty);
         }
-    }
-
-    [ServerRpc(RequireOwnership = false)]
-    private void InteractLogicServerRpc()
-    {
-        InteractLogicClientRpc();
-    }
-
-    [ClientRpc]
-    private void InteractLogicClientRpc()
-    {
-
-        OnAnyObjectTrashed?.Invoke(this, EventArgs.Empty);
-
     }
 }

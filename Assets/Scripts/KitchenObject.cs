@@ -60,12 +60,9 @@ public class KitchenObject : NetworkBehaviour
 
     public void DestroySelf()
     {
-        Destroy(gameObject);
-    }
-
-    public void ClearKitchenObjectOnParent()
-    {
         _kitchenObjectParent.ClearKitchenObject();
+
+        Destroy(gameObject);
     }
 
     public bool TryGetPlate(out PlateKitchenObject plateKitchenObject)
@@ -85,11 +82,5 @@ public class KitchenObject : NetworkBehaviour
     public static void SpawnKitchenObject(KitchenObjectSO kitchenObjectSO, IKitchenObjectParent kitchenObjectParent)
     {
         GameMultiplayer.Instance.SpawnKitchenObject(kitchenObjectSO, kitchenObjectParent);
-    }
-
-    // This doesn't have to be static, we're just doing it to match the pattern of the SpawnKitchenObject function
-    public static void DestroyKitchenObject(KitchenObject kitchenObject)
-    {
-        GameMultiplayer.Instance.DestroyKitchenObject(kitchenObject);
     }
 }
