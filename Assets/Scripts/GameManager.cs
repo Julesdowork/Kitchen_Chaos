@@ -180,6 +180,11 @@ public class GameManager : NetworkBehaviour
         return _state.Value == State.GameOver;
     }
 
+    public bool IsWaitingToStart()
+    {
+        return _state.Value == State.WaitingToStart;
+    }
+
     public bool IsLocalPlayerReady()
     {
         return _isLocalPlayerReady;
