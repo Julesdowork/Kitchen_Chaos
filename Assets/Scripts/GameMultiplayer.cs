@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
+using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,12 +14,15 @@ public class GameMultiplayer : NetworkBehaviour
     public event EventHandler OnFailedToJoinGame;
     public event EventHandler OnPlayerDataNetworkListChanged;
 
-    private const int MAX_PLAYER_AMOUNT = 4;
+    public const int MAX_PLAYER_AMOUNT = 4;
 
     [SerializeField] private KitchenObjectListSO _kitchenObjectListSO;
     [SerializeField] private List<Color> _playerColorList;
 
+    private const string PLAYER_PREFS_PLAYER_NAME_MULTIPLAYER = "PlayerNameMultiplayer";
+
     private NetworkList<PlayerData> _playerDataNetworkList;
+    private string _playerName;
 
     void Awake()
     {
@@ -26,8 +30,22 @@ public class GameMultiplayer : NetworkBehaviour
 
         DontDestroyOnLoad(gameObject);
 
+        _playerName = PlayerPrefs.GetString(PLAYER_PREFS_PLAYER_NAME_MULTIPLAYER, "Player Name" + UnityEngine.Random.Range(100, 1000));
+
         _playerDataNetworkList = new NetworkList<PlayerData>();
         _playerDataNetworkList.OnListChanged += PlayerDataNetworkList_OnListChanged;
+    }
+
+    public string GetPlayerName()
+    {
+        return _playerName;
+    }
+
+    public void SetPlayerName(string playerName)
+    {
+        _playerName = playerName;
+
+        PlayerPrefs.SetString(PLAYER_PREFS_PLAYER_NAME_MULTIPLAYER, playerName);
     }
 
     private void PlayerDataNetworkList_OnListChanged(NetworkListEvent<PlayerData> changeEvent)
@@ -63,6 +81,8 @@ public class GameMultiplayer : NetworkBehaviour
             clientId = clientId,
             colorId = GetFirstUnusedColorId(),
         });
+        SetPlayerNameServerRpc(GetPlayerName());
+        SetPlayerIdServerRpc(AuthenticationService.Instance.PlayerId);
     }
 
     public void StartClient()
@@ -70,7 +90,38 @@ public class GameMultiplayer : NetworkBehaviour
         OnTryingToJoinGame?.Invoke(this, EventArgs.Empty);
 
         NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Client_OnClientDisconnectCallback;
+        NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_Client_OnClientConnectedCallback;
         NetworkManager.Singleton.StartClient();
+    }
+
+    private void NetworkManager_Client_OnClientConnectedCallback(ulong clientId)
+    {
+        SetPlayerNameServerRpc(GetPlayerName());
+        SetPlayerIdServerRpc(AuthenticationService.Instance.PlayerId);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void SetPlayerNameServerRpc(string playerName, ServerRpcParams serverRpcParams = default)
+    {
+        int playerDataIndex = GetPlayerDataIndexFromClientId(serverRpcParams.Receive.SenderClientId);
+
+        PlayerData playerData = _playerDataNetworkList[playerDataIndex];
+
+        playerData.playerName = playerName;
+
+        _playerDataNetworkList[playerDataIndex] = playerData;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void SetPlayerIdServerRpc(string playerId, ServerRpcParams serverRpcParams = default)
+    {
+        int playerDataIndex = GetPlayerDataIndexFromClientId(serverRpcParams.Receive.SenderClientId);
+
+        PlayerData playerData = _playerDataNetworkList[playerDataIndex];
+
+        playerData.playerId = playerId;
+
+        _playerDataNetworkList[playerDataIndex] = playerData;
     }
 
     private void NetworkManager_Client_OnClientDisconnectCallback(ulong clientId)
