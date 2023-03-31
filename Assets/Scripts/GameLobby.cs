@@ -115,7 +115,7 @@ public class GameLobby : MonoBehaviour
         if (UnityServices.State != ServicesInitializationState.Initialized)
         {
             InitializationOptions options = new InitializationOptions();
-            options.SetProfile(UnityEngine.Random.Range(0, 10000).ToString());
+            //options.SetProfile(UnityEngine.Random.Range(0, 10000).ToString());
 
             await UnityServices.InitializeAsync(options);
 

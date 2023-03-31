@@ -1187,9 +1187,9 @@ MonoBehaviour:
     Port: 7777
     ServerListenAddress: 
   DebugSimulator:
-    PacketDelayMS: 50
-    PacketJitterMS: 50
-    PacketDropRate: 10
+    PacketDelayMS: 0
+    PacketJitterMS: 0
+    PacketDropRate: 0
 --- !u!114 &462874790
 MonoBehaviour:
   m_ObjectHideFlags: 0
