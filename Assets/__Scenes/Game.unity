@@ -5101,7 +5101,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _recipesDeliveredText: {fileID: 1004016432}
-  _retryButton: {fileID: 1015061169}
   _mainMenuButton: {fileID: 1246134597}
 --- !u!1 &652482705
 GameObject:
@@ -8923,7 +8922,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1015061168
 RectTransform:
   m_ObjectHideFlags: 0

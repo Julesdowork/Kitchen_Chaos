@@ -10,7 +10,7 @@ public class GameMultiplayer : NetworkBehaviour
 {
     public static GameMultiplayer Instance { get; private set; }
 
-    public static bool playMultiplayer;
+    public static bool playMultiplayer = true;
 
     public event EventHandler OnTryingToJoinGame;
     public event EventHandler OnFailedToJoinGame;

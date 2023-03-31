@@ -8,7 +8,7 @@ using Unity.Netcode;
 public class GameOverUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _recipesDeliveredText;
-    [SerializeField] private Button _retryButton;
+    //[SerializeField] private Button _retryButton;
     [SerializeField] private Button _mainMenuButton;
 
     private float _waitForButtonsTimer;
@@ -17,11 +17,6 @@ public class GameOverUI : MonoBehaviour
 
     void Awake()
     {
-        _retryButton.onClick.AddListener(() =>
-        {
-            Loader.Load(Loader.Scene.Game);
-        });
-
         _mainMenuButton.onClick.AddListener(() =>
         {
             NetworkManager.Singleton.Shutdown();
@@ -29,7 +24,7 @@ public class GameOverUI : MonoBehaviour
         });
 
         _mainMenuButton.gameObject.SetActive(false);
-        _retryButton.gameObject.SetActive(false);
+        //_retryButton.gameObject.SetActive(false);
     }
 
     void Start()
@@ -80,8 +75,9 @@ public class GameOverUI : MonoBehaviour
 
     private void ShowButtons()
     {
-        _retryButton.gameObject.SetActive(true);
-        _retryButton.Select();
+        //_retryButton.gameObject.SetActive(true);
+        //_retryButton.Select();
         _mainMenuButton.gameObject.SetActive(true);
+        _mainMenuButton.Select();
     }
 }
